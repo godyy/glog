@@ -20,6 +20,9 @@ const (
 
 // Logger 封装日志接口.
 type Logger interface {
+	// ZapLogger 获取并返回内部的zap.Logger
+	ZapLogger() *zap.Logger
+
 	// Level 获取启动的最小日志level
 	Level() Level
 
@@ -149,6 +152,10 @@ func NewLogger(c *Config) Logger {
 		zap:   zapLogger,
 		sugar: zapLogger.Sugar(),
 	}
+}
+
+func (l *logger) ZapLogger() *zap.Logger {
+	return l.zap
 }
 
 func (l *logger) Level() Level {
